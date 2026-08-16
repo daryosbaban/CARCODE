@@ -79,6 +79,31 @@
     });
   }
 
+  async function refreshModelOptions() {
+    const make = document.getElementById('brandSelect').value;
+    const year = document.getElementById('yearInput').value.trim();
+    const datalist = document.getElementById('modelDatalist');
+    const modelInput = document.getElementById('modelInput');
+    if (!make || !year) {
+      datalist.innerHTML = '';
+      modelInput.placeholder = 'اختر الماركة والسنة أولاً';
+      return;
+    }
+    modelInput.placeholder = 'جارٍ تحميل الموديلات...';
+    try {
+      const res = await fetch(`/api/search/models?make=${encodeURIComponent(make)}&year=${encodeURIComponent(year)}`);
+      const data = await res.json();
+      if (data.unavailable || !data.models || data.models.length === 0) {
+        modelInput.placeholder = 'اكتب اسم الموديل يدوياً';
+        return;
+      }
+      datalist.innerHTML = data.models.map((m) => `<option value="${escapeHtml(m)}"></option>`).join('');
+      modelInput.placeholder = `مثال: ${data.models[0]}`;
+    } catch {
+      modelInput.placeholder = 'اكتب اسم الموديل يدوياً';
+    }
+  }
+
   function setupForms() {
     document.getElementById('vinForm').addEventListener('submit', (e) => {
       e.preventDefault();
@@ -89,6 +114,9 @@
       }
       runSearch({ vin });
     });
+
+    document.getElementById('brandSelect').addEventListener('change', refreshModelOptions);
+    document.getElementById('yearInput').addEventListener('change', refreshModelOptions);
 
     document.getElementById('detailsForm').addEventListener('submit', (e) => {
       e.preventDefault();
@@ -126,6 +154,7 @@
       if (!res.ok) throw new Error(data.error || 'حدث خطأ أثناء البحث');
 
       countEl.textContent = `تم العثور على ${data.count} نتيجة`;
+      renderVehicleInfo(data.vehicleInfo);
 
       if (data.count === 0) {
         container.innerHTML = `
@@ -146,6 +175,35 @@
           <div>${escapeHtml(err.message)}</div>
         </div>`;
     }
+  }
+
+  function renderVehicleInfo(info) {
+    const box = document.getElementById('vehicleInfoBox');
+    if (!info || !info.valid) {
+      box.innerHTML = '';
+      return;
+    }
+    const rows = [
+      ['الماركة', info.make || info.brand],
+      ['الموديل', info.model],
+      ['سنة الصنع', info.year],
+      ['نوع الهيكل', info.bodyClass],
+      ['عدد الأسطوانات', info.engineCylinders],
+      ['نوع الوقود', info.fuelType],
+      ['بلد التصنيع', info.plantCountry],
+    ].filter(([, v]) => v);
+
+    const sourceLabel =
+      info.source === 'nhtsa'
+        ? 'المصدر: NHTSA (قاعدة بيانات حكومية أمريكية مجانية وحقيقية)'
+        : 'المصدر: فك رقم الهيكل حسب المعيار العالمي العام (WMI)';
+
+    box.innerHTML = `
+      <div class="vehicle-info">
+        <div class="vi-title">🚘 بيانات السيارة المكتشفة</div>
+        ${rows.map(([label, value]) => `<div class="vi-item"><b>${escapeHtml(value)}</b> ${escapeHtml(label)}</div>`).join('')}
+        <div class="vi-source">${sourceLabel}</div>
+      </div>`;
   }
 
   function renderCodeItem(item) {

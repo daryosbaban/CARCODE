@@ -545,6 +545,31 @@ footer {
 .tag.sev-medium { color: #fcd34d; border-color: rgba(245,158,11,0.4); background: rgba(245,158,11,0.08); }
 .tag.sev-low { color: #a7f3d3; border-color: rgba(52,211,153,0.4); background: rgba(52,211,153,0.08); }
 
+.vehicle-info {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 22px;
+  align-items: center;
+  padding: 20px 24px;
+  border-radius: var(--radius);
+  border: 1px solid rgba(34, 211, 238, 0.3);
+  background: linear-gradient(135deg, rgba(34,211,238,0.08), rgba(37,99,235,0.08));
+  margin-bottom: 26px;
+}
+.vehicle-info .vi-title {
+  font-weight: 900;
+  font-size: 16px;
+  color: var(--primary);
+  flex: 1 1 100%;
+}
+.vehicle-info .vi-item { font-size: 13.5px; color: var(--text-dim); }
+.vehicle-info .vi-item b { color: var(--text); font-weight: 800; }
+.vehicle-info .vi-source {
+  font-size: 11px;
+  color: var(--text-faint);
+  flex: 1 1 100%;
+}
+
 .empty-state {
   text-align: center;
   padding: 50px 20px;

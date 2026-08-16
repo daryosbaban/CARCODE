@@ -2,8 +2,35 @@ const express = require('express');
 const db = require('../db');
 const { requireAuth } = require('../middleware/auth');
 const { decodeVin } = require('../utils/vin');
+const { decodeVinNHTSA, getModelsForMakeYear } = require('../utils/nhtsa');
 
 const router = express.Router();
+
+const CACHE_TTL_MS = 60 * 60 * 1000; // 1 hour
+const modelsCache = new Map();
+
+function getCached(key) {
+  const entry = modelsCache.get(key);
+  if (!entry || entry.expires < Date.now()) return null;
+  return entry.value;
+}
+function setCached(key, value) {
+  modelsCache.set(key, { value, expires: Date.now() + CACHE_TTL_MS });
+}
+
+// Tries the free NHTSA vPIC service (real, live data for virtually any make/model
+// sold in the US market); falls back to the local standards-based WMI table if the
+// network call fails or is unreachable, so the feature still works offline.
+async function decodeVinBestEffort(vin) {
+  try {
+    const nhtsa = await decodeVinNHTSA(vin);
+    if (nhtsa && nhtsa.valid && nhtsa.make) return nhtsa;
+  } catch {
+    // fall through to local decode
+  }
+  const local = decodeVin(vin);
+  return local && local.valid ? { ...local, source: 'local' } : local;
+}
 
 router.get('/meta', (req, res) => {
   const brands = db.prepare('SELECT id, name, name_ar FROM brands ORDER BY name_ar').all();
@@ -11,25 +38,45 @@ router.get('/meta', (req, res) => {
   res.json({ brands, modules });
 });
 
-router.get('/vin/:vin', (req, res) => {
-  const result = decodeVin(req.params.vin);
+router.get('/models', async (req, res) => {
+  const { make, year } = req.query;
+  if (!make || !year) {
+    return res.status(400).json({ error: 'الرجاء تحديد الماركة والسنة' });
+  }
+  const key = `${make}|${year}`;
+  const cached = getCached(key);
+  if (cached) return res.json({ models: cached, cached: true });
+
+  try {
+    const models = await getModelsForMakeYear(String(make), String(year));
+    setCached(key, models);
+    res.json({ models, cached: false });
+  } catch {
+    res.json({ models: [], unavailable: true });
+  }
+});
+
+router.get('/vin/:vin', async (req, res) => {
+  const result = await decodeVinBestEffort(req.params.vin);
   if (!result || !result.valid) {
     return res.status(400).json({ error: (result && result.reason) || 'رقم هيكل غير صالح' });
   }
   res.json(result);
 });
 
-router.get('/', requireAuth, (req, res) => {
+router.get('/', requireAuth, async (req, res) => {
   const { vin, marke, model, year, mkb, q } = req.query;
 
   let brandFilter = marke ? String(marke).trim() : null;
   let yearFilter = year ? parseInt(year, 10) : null;
+  let vehicleInfo = null;
 
   if (vin) {
-    const decoded = decodeVin(String(vin));
+    const decoded = await decodeVinBestEffort(String(vin));
     if (decoded && decoded.valid) {
-      brandFilter = brandFilter || decoded.brand;
+      brandFilter = brandFilter || decoded.make || decoded.brand;
       yearFilter = yearFilter || decoded.year;
+      vehicleInfo = decoded;
     }
   }
 
@@ -79,7 +126,7 @@ router.get('/', requireAuth, (req, res) => {
     JSON.stringify({ vin, marke, model, year, mkb, q })
   );
 
-  res.json({ count: rows.length, results: rows });
+  res.json({ count: rows.length, results: rows, vehicleInfo });
 });
 
 router.get('/history', requireAuth, (req, res) => {
