@@ -1,0 +1,15 @@
+<svg width="180" height="40" viewBox="0 0 180 40" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="gradMark" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#22d3ee"/>
+      <stop offset="100%" stop-color="#2563eb"/>
+    </linearGradient>
+  </defs>
+  <g>
+    <rect x="1" y="4" width="32" height="32" rx="9" fill="url(#gradMark)"/>
+    <path d="M10 22.5 L15.5 15 H19 L21 18.5 L23 15 H26.5 L20.5 24 H17.5 L15.8 21 L14.5 24 H10.5 Z" fill="#04121f" opacity="0.92"/>
+    <circle cx="26" cy="12" r="2.1" fill="#04121f" opacity="0.92"/>
+  </g>
+  <text x="42" y="27" font-family="Tajawal, Arial, sans-serif" font-size="19" font-weight="800" fill="#eaf6ff" letter-spacing="0.5">CAR</text>
+  <text x="80" y="27" font-family="Tajawal, Arial, sans-serif" font-size="19" font-weight="800" fill="#22d3ee" letter-spacing="0.5">CODE</text>
+</svg>

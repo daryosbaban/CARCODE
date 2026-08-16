@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CAR CODE | منصة تشخيص السيارات وفك رموز الأعطال</title>
+<meta name="description" content="CAR CODE منصة عربية لفك رموز أعطال السيارات (OBD-II)، البحث برقم الهيكل VIN، والماركة والموديل والسنة، لجميع وحدات التحكم في السيارة.">
+<link rel="icon" href="/img/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+
+<nav class="navbar">
+  <div class="container">
+    <a href="/" aria-label="CAR CODE">
+      <img src="/img/logo.svg" alt="CAR CODE" height="30">
+    </a>
+    <div class="nav-links">
+      <a href="#features">المميزات</a>
+      <a href="#how">كيف يعمل</a>
+      <a href="#brands">الماركات</a>
+      <a href="#faq">الأسئلة الشائعة</a>
+    </div>
+    <div class="nav-actions" id="navAuthArea">
+      <a href="/login.html" class="btn btn-ghost">تسجيل الدخول</a>
+      <a href="/register.html" class="btn btn-primary">إنشاء حساب</a>
+    </div>
+  </div>
+</nav>
+
+<header class="hero">
+  <div class="container hero-grid">
+    <div>
+      <span class="eyebrow"><span class="dot"></span> قاعدة بيانات تشخيصية شاملة لجميع الماركات</span>
+      <h1>افهم أعطال سيارتك <span>بلمح البصر</span></h1>
+      <p class="lead">CAR CODE منصة عربية لفك رموز أعطال السيارات (OBD-II)، والبحث برقم الهيكل VIN أو الماركة والموديل، لتشخيص دقيق وسريع لجميع وحدات التحكم في سيارتك.</p>
+
+      <div class="search-card">
+        <div class="search-tabs">
+          <button class="search-tab active" data-tab="vin">بحث برقم الهيكل (VIN)</button>
+          <button class="search-tab" data-tab="details">بحث بالماركة والموديل</button>
+        </div>
+
+        <form id="vinForm" class="search-fields grid-1">
+          <div class="field">
+            <label for="vinInput">رقم هيكل السيارة (VIN) - 17 رمز</label>
+            <input type="text" id="vinInput" maxlength="17" placeholder="مثال: KNADN412CB6123456" autocomplete="off">
+          </div>
+          <div class="search-submit-row">
+            <button type="submit" class="btn btn-primary btn-lg">
+              <span>ابدأ التشخيص</span>
+              <span class="spinner" id="vinSpinner"></span>
+            </button>
+          </div>
+        </form>
+
+        <form id="detailsForm" class="search-fields grid-4 hidden">
+          <div class="field">
+            <label for="brandSelect">الماركة</label>
+            <select id="brandSelect"><option value="">اختر الماركة</option></select>
+          </div>
+          <div class="field">
+            <label for="modelInput">الموديل</label>
+            <input type="text" id="modelInput" placeholder="مثال: سبورتاج">
+          </div>
+          <div class="field">
+            <label for="yearInput">سنة الصنع</label>
+            <input type="number" id="yearInput" placeholder="مثال: 2022" min="1990" max="2030">
+          </div>
+          <div class="field">
+            <label for="moduleSelect">الوحدة</label>
+            <select id="moduleSelect"><option value="">كل الوحدات</option></select>
+          </div>
+          <div class="search-submit-row" style="grid-column: 1 / -1;">
+            <button type="submit" class="btn btn-primary btn-lg">ابحث عن الأعطال</button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <div class="stats">
+      <div class="stat"><div class="num">40+</div><div class="label">رمز عطل موثّق</div></div>
+      <div class="stat"><div class="num">8</div><div class="label">ماركات مدعومة</div></div>
+      <div class="stat"><div class="num">6</div><div class="label">وحدات تحكم (ECM, ABS, SRS...)</div></div>
+      <div class="stat"><div class="num">24/7</div><div class="label">وصول فوري للبيانات</div></div>
+    </div>
+  </div>
+</header>
+
+<section class="brand-strip" id="brands">
+  <div class="container">
+    <div class="strip-title">تدعم منصتنا أشهر الماركات العالمية</div>
+    <div class="brand-row">
+      <span class="brand-chip">كيا</span>
+      <span class="brand-chip">هيونداي</span>
+      <span class="brand-chip">تويوتا</span>
+      <span class="brand-chip">هوندا</span>
+      <span class="brand-chip">نيسان</span>
+      <span class="brand-chip">فورد</span>
+      <span class="brand-chip">شيفروليه</span>
+      <span class="brand-chip">مازدا</span>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="features">
+  <div class="container">
+    <div class="section-head">
+      <span class="kicker">لماذا CAR CODE</span>
+      <h2>كل ما تحتاجه لتشخيص سريع ودقيق</h2>
+      <p>أدوات مصممة للفنيين وهواة السيارات على حدٍ سواء، بواجهة عربية بسيطة وبيانات منظمة.</p>
+    </div>
+    <div class="features-grid">
+      <div class="feature-card">
+        <div class="feature-icon">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M4 12h4l2-7 4 14 2-7h4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </div>
+        <h3>فك رموز الأعطال (DTC)</h3>
+        <p>قاعدة بيانات لأكواد الأعطال القياسية (OBD-II) مع الشرح بالعربية ودرجة الخطورة.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><rect x="3" y="7" width="18" height="10" rx="2" stroke="currentColor" stroke-width="2"/><path d="M7 7V5a2 2 0 012-2h6a2 2 0 012 2v2" stroke="currentColor" stroke-width="2"/></svg>
+        </div>
+        <h3>فك رقم الهيكل VIN</h3>
+        <p>استخرج الماركة وسنة الصنع مباشرة من رقم الهيكل باستخدام المعايير العالمية القياسية.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="2"/><path d="M12 7v5l3 3" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+        </div>
+        <h3>بحث فوري ومنظم</h3>
+        <p>ابحث بالماركة أو الموديل أو السنة أو وحدة التحكم (ECM, TCM, ABS, SRS, BCM) بثوانٍ.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M12 2l8 4v6c0 5-3.5 8.5-8 10-4.5-1.5-8-5-8-10V6l8-4z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg>
+        </div>
+        <h3>حساب آمن وخاص</h3>
+        <p>تسجيل دخول محمي وكلمات مرور مشفّرة، وسجلّ بحث خاص بك تسترجعه في أي وقت.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M3 12h18M3 6h18M3 18h18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+        </div>
+        <h3>تغطية لكل الوحدات</h3>
+        <p>محرك، ناقل حركة، فرامل ABS، وسائد هوائية SRS، هيكل BCM، وشبكة الاتصال الداخلي.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M12 20l-1.5-1.4C5 14 2 11.3 2 8a4.5 4.5 0 018-2.7A4.5 4.5 0 0122 8c0 3.3-3 6-8.5 10.6L12 20z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg>
+        </div>
+        <h3>واجهة عربية أنيقة</h3>
+        <p>تصميم عصري داكن مستوحى من لوحات التشخيص، سهل الاستخدام على الجوال والحاسوب.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="how" style="padding-top:0;">
+  <div class="container">
+    <div class="section-head">
+      <span class="kicker">آلية العمل</span>
+      <h2>أربع خطوات بسيطة للتشخيص</h2>
+    </div>
+    <div class="steps">
+      <div class="step">
+        <div class="step-num">1</div>
+        <h4>أنشئ حسابك</h4>
+        <p>سجّل مجاناً خلال ثوانٍ للوصول إلى كامل قاعدة البيانات.</p>
+      </div>
+      <div class="step">
+        <div class="step-num">2</div>
+        <h4>أدخل بيانات السيارة</h4>
+        <p>رقم الهيكل VIN أو الماركة والموديل والسنة.</p>
+      </div>
+      <div class="step">
+        <div class="step-num">3</div>
+        <h4>استعرض النتائج</h4>
+        <p>قائمة منظمة بالأعطال المحتملة مع الشرح والخطورة.</p>
+      </div>
+      <div class="step">
+        <div class="step-num">4</div>
+        <h4>تابع سجلّك</h4>
+        <p>راجع عمليات البحث السابقة في أي وقت من لوحة التحكم.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="faq" style="padding-top:0;">
+  <div class="container">
+    <div class="cta-banner">
+      <h2>جاهز تشخّص سيارتك الآن؟</h2>
+      <p>انضم لمنصة CAR CODE مجاناً وابدأ البحث في قاعدة بياناتنا التشخيصية.</p>
+      <a href="/register.html" class="btn btn-primary btn-lg">أنشئ حسابك المجاني</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <img src="/img/logo.svg" alt="CAR CODE" height="28">
+        <p>منصة عربية لتشخيص أعطال السيارات وفك رموزها، لجميع الماركات ووحدات التحكم.</p>
+      </div>
+      <div class="footer-col">
+        <h5>المنصة</h5>
+        <ul>
+          <li><a href="#features">المميزات</a></li>
+          <li><a href="#how">كيف يعمل</a></li>
+          <li><a href="#brands">الماركات</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h5>الحساب</h5>
+        <ul>
+          <li><a href="/login.html">تسجيل الدخول</a></li>
+          <li><a href="/register.html">إنشاء حساب</a></li>
+          <li><a href="/dashboard.html">لوحة التحكم</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h5>تنويه</h5>
+        <ul>
+          <li><a href="#">بيانات مرجعية عامة فقط</a></li>
+          <li><a href="#">لا تغني عن فني مختص</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2026 CAR CODE. جميع الحقوق محفوظة.</span>
+      <span>صُنع بشغف لعشاق السيارات 🚗</span>
+    </div>
+  </div>
+</footer>
+
+<script src="/js/main.js"></script>
+</body>
+</html>

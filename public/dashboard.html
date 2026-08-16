@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>لوحة التحكم | CAR CODE</title>
+<link rel="icon" href="/img/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+
+<nav class="navbar">
+  <div class="container">
+    <a href="/" aria-label="CAR CODE">
+      <img src="/img/logo.svg" alt="CAR CODE" height="30">
+    </a>
+    <div class="nav-links">
+      <a href="/">الرئيسية</a>
+      <a href="/#features">المميزات</a>
+    </div>
+    <div class="nav-actions">
+      <span class="nav-user" id="userGreeting"></span>
+      <button class="btn btn-ghost" id="logoutBtn">تسجيل الخروج</button>
+    </div>
+  </div>
+</nav>
+
+<div class="container" style="padding-top:40px; padding-bottom:80px;">
+  <div class="dash-header">
+    <div>
+      <h1>لوحة التشخيص</h1>
+      <p>ابحث عن أعطال سيارتك برقم الهيكل أو بالماركة والموديل والسنة.</p>
+    </div>
+  </div>
+
+  <div class="panel">
+    <div class="search-tabs" style="margin-inline:0;">
+      <button class="search-tab active" data-tab="vin">بحث برقم الهيكل (VIN)</button>
+      <button class="search-tab" data-tab="details">بحث بالماركة والموديل</button>
+      <button class="search-tab" data-tab="code">بحث بنص/رمز العطل</button>
+    </div>
+
+    <form id="vinForm" class="search-fields grid-4">
+      <div class="field" style="grid-column: span 3;">
+        <label for="vinInput">رقم هيكل السيارة (VIN)</label>
+        <input type="text" id="vinInput" maxlength="17" placeholder="مثال: KNADN412CB6123456" autocomplete="off">
+      </div>
+      <div class="field" style="align-self:end;">
+        <button type="submit" class="btn btn-primary btn-block">بحث</button>
+      </div>
+    </form>
+
+    <form id="detailsForm" class="search-fields grid-4 hidden">
+      <div class="field">
+        <label for="brandSelect">الماركة</label>
+        <select id="brandSelect"><option value="">الكل</option></select>
+      </div>
+      <div class="field">
+        <label for="modelInput">الموديل</label>
+        <input type="text" id="modelInput" placeholder="مثال: كورولا">
+      </div>
+      <div class="field">
+        <label for="yearInput">سنة الصنع</label>
+        <input type="number" id="yearInput" placeholder="مثال: 2022" min="1990" max="2030">
+      </div>
+      <div class="field">
+        <label for="moduleSelect">الوحدة</label>
+        <select id="moduleSelect"><option value="">الكل</option></select>
+      </div>
+      <div class="search-submit-row" style="grid-column: 1 / -1;">
+        <button type="submit" class="btn btn-primary">بحث عن الأعطال</button>
+      </div>
+    </form>
+
+    <form id="codeForm" class="search-fields grid-4 hidden">
+      <div class="field" style="grid-column: span 3;">
+        <label for="qInput">اكتب رمز العطل أو كلمة مفتاحية</label>
+        <input type="text" id="qInput" placeholder="مثال: P0300 أو حساس الأكسجين">
+      </div>
+      <div class="field" style="align-self:end;">
+        <button type="submit" class="btn btn-primary btn-block">بحث</button>
+      </div>
+    </form>
+  </div>
+
+  <div class="panel">
+    <div class="results-meta">
+      <span id="resultsCount">أدخل بيانات البحث أعلاه لعرض النتائج</span>
+    </div>
+    <div id="resultsContainer">
+      <div class="empty-state">
+        <div class="icon">🔧</div>
+        <div>لا توجد نتائج بعد. ابدأ بحثاً جديداً من الأعلى.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="panel">
+    <h3>آخر عمليات البحث</h3>
+    <div id="historyContainer">
+      <div class="empty-state"><div>لا يوجد سجل بحث حتى الآن.</div></div>
+    </div>
+  </div>
+</div>
+
+<script src="/js/dashboard.js"></script>
+</body>
+</html>
